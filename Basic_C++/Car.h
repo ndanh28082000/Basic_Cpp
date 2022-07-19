@@ -11,7 +11,7 @@ class Car
 {
 public:
 	Car();
-	void Run(string datefile);
+	void run(string datefile);
 private:
 	//the private data of class include: private id,velocity to anounce safe distance
 	unsigned int mscn_[MSCN_ARRAY_SIZE];
@@ -27,23 +27,23 @@ private:
 	static Screen screen_;
 	static unsigned int speed_;
 
-	bool Loginandsetup(string datafile);
-	void InputMSCN();
-	bool CheckMSCN();
-	void ReinstallMSCN();
-	void Installwarningspeed();
-	void Reinstallwarningspeed();
+	bool loginAndSetup(string datafile);
+	void inputMSCN();
+	bool checkMSCN();
+	void reinstallMSCN();
+	void installWarningspeed();
+	void reinstallWarningspeed();
 
-	void Menu();
-	void Handleselection();
-	unsigned int Inputselection(unsigned int sum_of_choice);
-	void Setgear(char new_gear);
-	void Speedup();
-	void Speeddown();
-	void Brake();
+	void menu();
+	void handleSelection();
+	unsigned int inputSelection(unsigned int sum_of_choice);
+	void setGear(char new_gear);
+	void speedUp();
+	void speedDown();
+	void brake();
 
-	bool ReadData(string dataFile);
-	void WriteData(string dataFile);
+	bool readData(string dataFile);
+	void writeData(string dataFile);
 
 };
 

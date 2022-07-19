@@ -4,7 +4,7 @@
 
 using namespace std;
 
-bool Isunsignedinterger(string str) {
+bool isUnsignedInterger(string str) {
 	size_t length = str.length();
 	for (size_t i = 0; i < length; i++)
 	{
@@ -13,7 +13,7 @@ bool Isunsignedinterger(string str) {
 	return true;
 }
 
-void Printarray(unsigned int arr[], unsigned int size_array) {
+void printArray(unsigned int arr[], unsigned int size_array) {
 	for (size_t i = 0; i < size_array; i++)
 	{
 		cout << arr[i] << " ";
@@ -42,22 +42,27 @@ bool YNQuestion() {
 	}
 }
 
-void Selectionsort(unsigned int* arr, unsigned int size_array) {
+void selectionSort(unsigned int* arr, unsigned int size_array) {
 	size_t i_min;
+	int count_selection = 0;
 	for (size_t i = 0; i < size_array - 1; i++)
 	{
 		i_min = i;
 		for (size_t j = i + 1; j < size_array; j++)
 		{
-			if (arr[j] < arr[i_min])
+			if (arr[j] < arr[i_min]) {
 				i_min = j;
+			}
+			count_selection++;
 		}
 		if (i_min != i)
 			swap(arr[i_min], arr[i]);
 	}
+	cout << "The complexity of this code: " << count_selection << " steps" << endl;
 }
 
-void Bubblesort(unsigned int* arr, unsigned int size_array) {
+void bubbleSort(unsigned int* arr, unsigned int size_array) {
+	int count_bubble = 0;
 	for (size_t i = 0; i < size_array - 1; i++)
 	{
 		for (size_t j = size_array - 1; j > i; j--)
@@ -65,6 +70,8 @@ void Bubblesort(unsigned int* arr, unsigned int size_array) {
 			if (arr[j] < arr[j - 1]) {
 				swap(arr[j], arr[j - 1]);
 			}
+			count_bubble++;
 		}
 	}
+	cout << "The complexity of this code: " << count_bubble << " steps" << endl;
 }

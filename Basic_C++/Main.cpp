@@ -3,6 +3,6 @@
 int main()
 {
     Car car;
-    car.Run("data.dat");
+    car.run("data.dat");
     return 0;
 }

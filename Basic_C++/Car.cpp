@@ -17,9 +17,9 @@ Car::Car() {
 	for (size_t i = 0; i < 3; i++)warning_speed_[i] = 0;
 }
 
-void Car::Run(string datafile) {
-	if (Loginandsetup(datafile))
-		Menu();
+void Car::run(string datafile) {
+	if (loginAndSetup(datafile))
+		menu();
 	else
 	{
 		system("cls");
@@ -30,42 +30,42 @@ void Car::Run(string datafile) {
 // the function works login and setup 
 // parameter is datafile
 // return true if logged in succesfully, return false if login failed
-bool Car::Loginandsetup(string datafile) {
-	if (ReadData(datafile))
+bool Car::loginAndSetup(string datafile) {
+	if (readData(datafile))
 	{
 		//the car has data
 		system("cls");
-		InputMSCN();
-		if (CheckMSCN())
+		inputMSCN();
+		if (checkMSCN())
 		{
 			//logged in succesfully
 			system("cls");
 			cout << "DANG NHAP THANH CONG !" << endl;
 
 			cout << "MANG NHAP VAO TRUOC KHI SAP XEP: ";
-			Printarray(input_mscn_, MSCN_ARRAY_SIZE);
+			printArray(input_mscn_, MSCN_ARRAY_SIZE);
 			unsigned int input_mscn_clone[MSCN_ARRAY_SIZE];
 			copy_n(input_mscn_, MSCN_ARRAY_SIZE, input_mscn_clone);
-			Bubblesort(input_mscn_clone, MSCN_ARRAY_SIZE);
+			bubbleSort(input_mscn_clone, MSCN_ARRAY_SIZE);
 			cout << "--> MANG NHAP VAO SAU KHI SAP XEP: ";
-			Printarray(input_mscn_clone, MSCN_ARRAY_SIZE);
+			printArray(input_mscn_clone, MSCN_ARRAY_SIZE);
 
 			cout << "MA SO CA NHAN TRUOC KHI SAP XEP: ";
-			Printarray(mscn_, MSCN_ARRAY_SIZE);
+			printArray(mscn_, MSCN_ARRAY_SIZE);
 			unsigned int mscn_clone[MSCN_ARRAY_SIZE];
 			copy_n(mscn_, MSCN_ARRAY_SIZE, mscn_clone);
-			Selectionsort(mscn_clone, MSCN_ARRAY_SIZE);
+			selectionSort(mscn_clone, MSCN_ARRAY_SIZE);
 			cout << "--> MA SO CA NHAN SAU KHI SAP XEP: ";
-			Printarray(mscn_clone, MSCN_ARRAY_SIZE);
+			printArray(mscn_clone, MSCN_ARRAY_SIZE);
 
 			cout << endl;
 			system("pause");
 
-			ReinstallMSCN();
-			Reinstallwarningspeed();
+			reinstallMSCN();
+			reinstallWarningspeed();
 
 			//update data
-			WriteData(datafile);
+			writeData(datafile);
 			return true;
 		}
 	}
@@ -74,29 +74,29 @@ bool Car::Loginandsetup(string datafile) {
 		//the first registration or can not read data
 		system("cls");
 		cout << "MA SO CA NHAN CHUA DUOC CAI DAT!" << endl;
-		InputMSCN();
+		inputMSCN();
 		copy_n(input_mscn_, MSCN_ARRAY_SIZE, mscn_);
-		ReinstallMSCN();
+		reinstallMSCN();
 		system("cls");
 
 		cout << "TOC DO CANH BAO KHOANG CACH AN TOAN CHUA DUOC CAI DAT!" << endl;
-		Installwarningspeed();
-		Reinstallwarningspeed();
-		WriteData(datafile);
+		installWarningspeed();
+		reinstallWarningspeed();
+		writeData(datafile);
 		return true;
 	}
 	return false;
 }
 
 //require user enter id and save it in input_mscn
-void Car::InputMSCN() {
+void Car::inputMSCN() {
 	cout << "NHAP MA SO CA NHAN, MANG " << setfill('0') << setw(2) << MSCN_ARRAY_SIZE << " so: " << endl;
 	for (size_t i = 0; i < MSCN_ARRAY_SIZE; i++)
 	{
 		cout << "SO THU " << i + 1 << " : ";
 		string str = "";
 		getline(cin, str);
-		while (!Isunsignedinterger(str)) {
+		while (!isUnsignedInterger(str)) {
 			cout << "--> NHAP KHONG HOP LE, VUI LONG NHAP LAI: " << endl;
 			getline(cin, str);
 		}
@@ -105,13 +105,13 @@ void Car::InputMSCN() {
 }
 
 // check id, compare input_mscn with mscn_
-bool Car::CheckMSCN() {
+bool Car::checkMSCN() {
 	unsigned int mscn_clone[MSCN_ARRAY_SIZE];
 	unsigned int input_mscn_clone[MSCN_ARRAY_SIZE];
 	copy_n(mscn_, MSCN_ARRAY_SIZE, mscn_clone);
 	copy_n(input_mscn_, MSCN_ARRAY_SIZE, input_mscn_clone);
-	Selectionsort(mscn_clone, MSCN_ARRAY_SIZE);
-	Bubblesort(input_mscn_clone, MSCN_ARRAY_SIZE);
+	selectionSort(mscn_clone, MSCN_ARRAY_SIZE);
+	bubbleSort(input_mscn_clone, MSCN_ARRAY_SIZE);
 	for (size_t i = 0; i < MSCN_ARRAY_SIZE; i++)
 	{
 		if (mscn_clone[i] != input_mscn_clone[i])
@@ -122,30 +122,30 @@ bool Car::CheckMSCN() {
 
 //announce that the id has been installed
 //asking if user wants to reinstall? 
-void Car::ReinstallMSCN() {
+void Car::reinstallMSCN() {
 	system("cls");
 	cout << "MA SO CA NHAN DA DUOC CAI DAT: ";
-	Printarray(mscn_, MSCN_ARRAY_SIZE);
+	printArray(mscn_, MSCN_ARRAY_SIZE);
 	cout << endl;
 	cout << "BAN CO MUON CAI DAT LAI MA SO CA NHAN KHONG? ";
 	if (YNQuestion())
 	{
 		system("cls");
-		InputMSCN();
+		inputMSCN();
 		copy_n(input_mscn_, MSCN_ARRAY_SIZE, mscn_);
-		ReinstallMSCN();
+		reinstallMSCN();
 	}
 }
 
 //installing warning speed range and save it in warning_speed array
-void Car::Installwarningspeed() {
+void Car::installWarningspeed() {
 	cout << "CAI DAT VAN TOC CANH BAO KHOANG CACH AN TOAN VOI 3 MUC VAN TOC: " << endl;
 	for (size_t i = 0; i < 3; i++)
 	{
 		cout << "VAN TOC MUC " << i + 1 << " : ";
 		string str = "";
 		getline(cin, str);
-		while (!Isunsignedinterger(str)) {
+		while (!isUnsignedInterger(str)) {
 			cout << "--> NHAP KHONG HOP LE, VUI LONG NHAP LAI: " << endl;
 			getline(cin, str);
 		}
@@ -155,25 +155,25 @@ void Car::Installwarningspeed() {
 
 //announce that the warningspeed range has been installed
 //asking if user wants to reinstall? 
-void Car::Reinstallwarningspeed() {
+void Car::reinstallWarningspeed() {
 	system("cls");
 	cout << "CAC MUC VAN TOC CANH BAO KHOANG CACH AN TOAN DA DUOC CAI DAT: ";
-	Printarray(warning_speed_, 3);
+	printArray(warning_speed_, 3);
 	cout << endl;
 	cout << "BAN CO MUON CAI DAT LAI CAC MUC VAN TOC CANH BAO KHOANG CACH AN TOAN KHONG? ";
 	if (YNQuestion())
 	{
 		system("cls");
-		Installwarningspeed();
-		Reinstallwarningspeed();
+		installWarningspeed();
+		reinstallWarningspeed();
 	}
 }
 
 // display MENU
-void Car::Menu() {
+void Car::menu() {
 	system("cls");
 	cout << "XIN CHAO ";
-	Printarray(mscn_, MSCN_ARRAY_SIZE);
+	printArray(mscn_, MSCN_ARRAY_SIZE);
 	cout << endl;
 	while (power_on)
 	{
@@ -212,36 +212,36 @@ void Car::Menu() {
 			cout << "MOI LUA CHON:\n1. TANG TOC\n2. GIAM TOC\n3. PHANH\n0. TRO VE MENU\n" << endl;
 			break;
 		}
-		Handleselection();
+		handleSelection();
 	}
 	cout << "DA TAT MAY, TAM BIET, HEN GAP LAI BAN LAN SAU" << endl;
 }
 
 //the function require user's choice and handle it
-void Car::Handleselection() {
+void Car::handleSelection() {
 	switch (screen_)
 	{
 	case Car::Screen::kNPScreen:
-		switch (Inputselection(5))
+		switch (inputSelection(5))
 		{
 		case 1:
 			//P
-			Setgear('P');
+			setGear('P');
 			screen_ = Screen::kNPScreen;
 			break;
 		case 2:
 			//R
-			Setgear('R');
+			setGear('R');
 			screen_ = Screen::kRDScreen;
 			break;
 		case 3:
 			//N
-			Setgear('N');
+			setGear('N');
 			screen_ = Screen::kNPScreen;
 			break;
 		case 4:
 			//D
-			Setgear('D');
+			setGear('D');
 			screen_ = Screen::kRDScreen;
 			break;
 		case 0:
@@ -251,24 +251,24 @@ void Car::Handleselection() {
 		}
 		break;
 	case Car::Screen::kRDScreen:
-		switch (Inputselection(4))
+		switch (inputSelection(4))
 		{
 		case 1:
 			// speed up
-			Speedup();
+			speedUp();
 			break;
 		case 2:
 			//speed down
-			Speeddown();
+			speedDown();
 			break;
 		case 3:
 			//brake
-			Brake();
+			brake();
 			break;
 		case 0:
 			//back to the menu
 			cout << "XIN CHAO ";
-			Printarray(mscn_, MSCN_ARRAY_SIZE);
+		    printArray(mscn_, MSCN_ARRAY_SIZE);
 			cout << endl;
 			screen_ = Screen::kNPScreen;
 			break;
@@ -281,11 +281,11 @@ void Car::Handleselection() {
 // requiring user's choice
 // parameter is the total of choice
 // output is user's choice
-unsigned int Car::Inputselection(unsigned int sum_of_choice) {
+unsigned int Car::inputSelection(unsigned int sum_of_choice) {
 	cout << "-->LUA CHON CUA BAN: ";
 	string temp = "";
 	getline(cin, temp);
-	while (!Isunsignedinterger(temp) || stoi(temp) > sum_of_choice - 1)
+	while (!isUnsignedInterger(temp) || stoi(temp) > sum_of_choice - 1)
 	{
 		cout << "LUA CHON KHONG HOP LE, VUI LONG LUA CHON LAI: ";
 		getline(cin, temp);
@@ -295,7 +295,7 @@ unsigned int Car::Inputselection(unsigned int sum_of_choice) {
 }
 
 //set up thee gear box
-void Car::Setgear(char new_gear) {
+void Car::setGear(char new_gear) {
 	switch (new_gear) {
 	case 'P':
 		if (speed_ == 0) {
@@ -343,22 +343,22 @@ void Car::Setgear(char new_gear) {
 	cout << endl;
 }
 
-void Car::Speedup()
+void Car::speedUp()
 {
 	speed_ += 5;
 }
 
-void Car::Speeddown()
+void Car::speedDown()
 {
 	speed_ = (speed_ > 5) ? (speed_ - 5) : 0;
 }
 
-void Car::Brake()
+void Car::brake()
 {
 	speed_ = 0;
 }
 
-bool Car::ReadData(string filename)
+bool Car::readData(string filename)
 {
 	ifstream file;
 	file.exceptions(ifstream::failbit | ifstream::badbit);
@@ -386,7 +386,7 @@ bool Car::ReadData(string filename)
 	return false;
 }
 
-void Car::WriteData(string filename)
+void Car::writeData(string filename)
 {
 	ofstream file;
 	file.exceptions(ofstream::failbit | ofstream::badbit);
